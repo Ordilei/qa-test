@@ -1,32 +1,68 @@
-<p align="center">
-  <a href="http://www.catho.com.br">
-      <img src="http://static.catho.com.br/svg/site/logoCathoB2c.svg" alt="Catho"/>
-  </a>
-</p>
-
+[![N|Solid](http://static.catho.com.br/svg/site/logoCathoB2c.svg)](http://www.catho.com.br)
 # Teste para vaga de QA 
-Teste para desenvolvedores candidatos à vaga de QA na Catho
 
-# Como começar 
-Faça um fork, clone este projeto e crie uma branch com o seu nome.
+## Arquitetura dos testes
+### Ferramentas
+ - linguagem Ruby
+ - Rspec
+ - Selenium
+ - xvfb
+ - docker
+ - capybara
+ - faker
 
-## Entendendo o teste
-Queremos que você faça a automação dos testes de um formulário, a idéia é avaliar as suas habilidades como QA, então pense bem nos cenários que irá testar e não se esqueça que a qualidade do código e da documentação também contam bastante.
+### Estrutura
+ - Page Object para estruturar o script de testes.
+ - usando Xvfb para emular uma interface dentro do container(não é necessário caso queria rodar local, não emulando uma interface). 
 
-## O teste!
-Automatize o formulário abaixo:
+Foi centralizado a execução dos scripts em um shell scrip, que está na pasta scripts esse script e foi estruturado para fazer uma validação no serviço, e verificar se o mesmo está retornando 200 para certificar se o teste pode começar a executar. Ao executar se algum teste falha é executado novamente para certificar se não foi uma oscilação eo mesmo falhar, ele tenta até 2 vezes re-executar o teste se ele quebrar é porque tem realmente algo errado. 
 
- <a href="https://www.w3schools.com/php/demo_form_validation_complete.php">Formulário</a>
- 
- O teste pode ser feito em qualquer linguagem de programação e com a tecnologia de sua escolha, exceto soluções pagas e/ou record and play.
- Você pode usar por exemplo: cucumber, behat, jbehave, selenium-webdrive (puro), entre outras.
+### Como executar os testes
+Para executar os testes podemos fazer de 2 formas uma local e outra para executar dentro do CI(Jenkins, Travis e etc...).
+##### Executando local
+Para executar local você precisa ter a seguintes ferramentas instaladas:
+- firefox(51+) ou chrome(ultima versão)
+- geckodriver ou chromedriver
+- Ruby 2.3.5
+- bundler
 
-A documentação do projeto deve conter:
-- Uma explicação do que é necessário para fazer seu projeto funcionar;
-- Como executar os testes
+Após clonar o projeto em seu diretório de trabalho é preciso executar esse comando antes de de começar:
 
-Lembre-se que na hora da avaliação olharemos para:
-- Os testes que foram feitos
-- Organização do código;
-- Clareza da documentação e do código;
+``` gem install bundler```
+
+Logo em seguida você deverá executar um ```bundle inatall``` 
+
+##### Instalando o geckodriver
+Mac OS
+```brew install geckodriver```
+
+Linux 
+```wget https://github.com/mozilla/geckodriver/releases/download/v0.11.0/geckodriver-v0.11.0-linux64.tar.gz```
+```tar xvzf geckodriver-v0.11.0-linux64.tar.gz```
+```chmod +x geckodriver```
+```mv geckodriver /usr/local/bin/geckodriver```
+
+Para executar os testes local é preciso passar o seguinte comando:
+
+```bundle exec rspec spec/features/test_form.rb```
+
+##### Usando um Ci para executar os testes
+Para executar em seu CI basta você ter apenas o docker instalado nele e executar o seguintes comandos:
+
+Para buildar sua imagem e gerar o container que irá executar os testes
+``` docker build . -f scripts/Dockerfile -t test-catho ```
+
+Após feito o build da imagem executamos o seguinte comando para rodar os testes
+`` docker run test-catho``
+### Referências
+
+Lista de referências utilizadas para estruturar os testes.
+
+| Ferramenta | README |
+| ------ | ------ |
+| Capybara | [https://github.com/teamcapybara/capybara/blob/master/README.md] |
+| Rspec | [https://github.com/rspec/rspec/blob/master/README.md] |
+| Selenium | [http://www.seleniumhq.org/docs/] |
+| Xvfb | [https://www.x.org/archive/X11R7.6/doc/man/man1/Xvfb.1.xhtml] |
+| Docker | [https://docs.docker.com/] |
 
