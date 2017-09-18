@@ -37,9 +37,13 @@ Mac OS
 ```brew install geckodriver```
 
 Linux 
+
 ```wget https://github.com/mozilla/geckodriver/releases/download/v0.11.0/geckodriver-v0.11.0-linux64.tar.gz```
+
 ```tar xvzf geckodriver-v0.11.0-linux64.tar.gz```
+
 ```chmod +x geckodriver```
+
 ```mv geckodriver /usr/local/bin/geckodriver```
 
 Para executar os testes local é preciso passar o seguinte comando:
@@ -48,6 +52,10 @@ Para executar os testes local é preciso passar o seguinte comando:
 
 ##### Usando um Ci para executar os testes
 Para executar em seu CI basta você ter apenas o docker instalado nele e executar o seguintes comandos:
+
+Obs: É preciso ter o docker instalado onde será executado os testes 
+
+[https://docs.docker.com/engine/installation/]
 
 Para buildar sua imagem e gerar o container que irá executar os testes
 ``` docker build . -f scripts/Dockerfile -t test-catho ```
